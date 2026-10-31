@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interviewer Copilot – HireSmart AI</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">⚡</div>
+          <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+        </a>
+        <span class="sidebar-portal-tag" style="background: rgba(124, 58, 237, 0.25); color: #c084fc;">Copilot</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item active" data-tab="dossier">
+          <span class="nav-icon">✨</span>
+          <span class="nav-label">Candidate Dossier & AI Questions</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="assigned">
+          <span class="nav-icon">📅</span>
+          <span class="nav-label">Assigned Interviews</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="scorecard">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Digital Scorecard</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar dashboard-user-avatar" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">PN</div>
+          <div class="user-details">
+            <div class="user-name dashboard-user-name">Dr. Priya Nair</div>
+            <div class="user-role-label dashboard-user-role">Principal AI Architect</div>
+          </div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="HireSmartAuth.logout()" title="Sign Out">⎋</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Interviewer Copilot</span>
+            <span>/</span>
+            <span class="breadcrumb-active">Candidate Dossier & AI Questions</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Role Quick Switcher -->
+          <div class="header-quick-switch">
+            <a href="candidate.html" class="quick-switch-item" data-role="candidate">Candidate</a>
+            <a href="recruiter.html" class="quick-switch-item" data-role="recruiter">Recruiter</a>
+            <a href="interviewer.html" class="quick-switch-item active" data-role="interviewer">Interviewer</a>
+            <a href="admin.html" class="quick-switch-item" data-role="admin">Admin</a>
+          </div>
+
+          <button class="header-btn-icon" title="Notifications">
+            <span>🔔</span>
+            <span class="badge-unread-dot"></span>
+          </button>
+
+          <div class="user-avatar dashboard-user-avatar" style="width: 34px; height: 34px; background: linear-gradient(135deg, #4f46e5, #7c3aed);">PN</div>
+        </div>
+      </header>
+
+      <!-- Page Body -->
+      <main class="page-body">
+
+        <!-- ==========================================
+             TAB 1: CANDIDATE DOSSIER & AI QUESTIONS
+             ========================================== -->
+        <section class="tab-content active" data-tab-content="dossier">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Candidate Technical Dossier & Gemini Copilot</h1>
+              <p class="page-subtitle">Real-time technical synthesis, project verification notes, and tailored questions generated with evaluation rubrics.</p>
+            </div>
+            <button id="btn-generate-questions" class="btn btn-ai" onclick="InterviewerApp.generateGeminiQuestions(true)">
+              <span>✨ Generate Questions with Gemini</span>
+            </button>
+          </div>
+
+          <!-- Candidate Header Dossier Card -->
+          <div class="card" style="border-top: 3px solid #7c3aed;">
+            <div class="card-header" style="background: white;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <h2 id="dossier-name" style="font-size: 1.5rem; margin: 0;">Aarav Sharma</h2>
+                  <span id="dossier-score" class="score-pill score-pill-high">94% AI Match</span>
+                  <span class="badge badge-purple">High Recommendation</span>
+                </div>
+                <div id="dossier-meta" class="text-xs text-muted" style="margin-top: 0.35rem;">
+                  IIT Bombay • B.Tech in Computer Science & Engineering • CGPA 9.24
+                </div>
+              </div>
+              <div>
+                <span class="badge badge-primary">Target: <span id="dossier-role">Associate AI/ML Engineer (GenAI Core)</span></span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Skills pills -->
+              <div style="margin-bottom: 1.5rem;">
+                <label class="form-label" style="font-size: 0.8rem; text-transform: uppercase; color: var(--slate-500);">Verified Technical Competencies</label>
+                <div id="dossier-skills-container">
+                  <!-- Skill chips -->
+                </div>
+              </div>
+
+              <!-- Projects dossier -->
+              <div>
+                <label class="form-label" style="font-size: 0.8rem; text-transform: uppercase; color: var(--slate-500);">Evaluated Technical Projects & Architectures</label>
+                <div id="dossier-projects-container">
+                  <!-- Projects populated via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gemini Generated Interview Questions Section -->
+          <div class="card" style="border: 1.5px solid var(--ai-purple-border); box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);">
+            <div class="card-header" style="background: linear-gradient(to right, #fbf8ff, #ffffff);">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--ai-gradient); display: flex; align-items: center; justify-content: center; color: white;">✨</div>
+                <div>
+                  <h3 class="card-title">Gemini Tailored Technical & Behavioral Probes</h3>
+                  <span class="text-xs text-muted">Contextually aligned with candidate GitHub repos & projects. Includes answer cues.</span>
+                </div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="InterviewerApp.generateGeminiQuestions(true)">
+                <span>⚡ Refresh Probes</span>
+              </button>
+            </div>
+
+            <div class="card-body" style="background: #fafafa;">
+              <div id="gemini-questions-container">
+                <!-- 5 questions rendered by InterviewerApp -->
+              </div>
+            </div>
+
+            <div class="card-footer" style="background: white;">
+              <button class="btn btn-primary" onclick="document.querySelector('.sidebar-nav-item[data-tab=\'scorecard\']').click()">
+                <span>Proceed to Digital Scorecard →</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: ASSIGNED INTERVIEWS
+             ========================================== -->
+        <section class="tab-content" data-tab-content="assigned">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">My Assigned Interview Panels</h1>
+              <p class="page-subtitle">Candidates allocated for university campus technical rounds. Click any candidate to switch active copilot context.</p>
+            </div>
+          </div>
+
+          <!-- List of Candidates -->
+          <div id="assigned-interviews-list" style="max-width: 900px;">
+            <!-- Rendered by InterviewerApp.renderAssignedInterviews() -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: DIGITAL SCORECARD
+             ========================================== -->
+        <section class="tab-content" data-tab-content="scorecard">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Digital Technical Scorecard & Feedback Engine</h1>
+              <p class="page-subtitle">Score competencies across standard anchors and trigger instant AI-drafted constructive candidate feedback reports.</p>
+            </div>
+          </div>
+
+          <div class="card" style="max-width: 900px;">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Candidate Evaluation: <span id="scorecard-cand-name" class="text-primary">Aarav Sharma</span></h3>
+                <span class="text-xs text-muted">Evaluator: Dr. Priya Nair • Round: Technical Deep Dive & GenAI Architecture</span>
+              </div>
+              <span class="badge badge-purple">Structured ATS Rubric</span>
+            </div>
+
+            <div class="card-body">
+              <form onsubmit="InterviewerApp.submitScorecard(event)">
+
+                <!-- Competence 1: Technical Depth -->
+                <div class="rating-group">
+                  <div class="rating-header">
+                    <label class="form-label" style="margin: 0;">1. Core Technical Competence & Algorithmic Fluency</label>
+                    <span id="tech-rating-val" class="score-pill score-pill-high">4 / 5.0</span>
+                  </div>
+                  <input type="range" id="tech-rating" class="rating-slider" min="1" max="5" step="1" value="4">
+                  <div class="rating-scale-labels">
+                    <span>1: Novice / Surface only</span>
+                    <span>2: Basic syntax</span>
+                    <span>3: Working competence</span>
+                    <span>4: Strong engineering</span>
+                    <span>5: Expert / Deep domain master</span>
+                  </div>
+                </div>
+
+                <!-- Competence 2: Problem Solving -->
+                <div class="rating-group">
+                  <div class="rating-header">
+                    <label class="form-label" style="margin: 0;">2. Problem Solving, Edge-Case Logic & Systems Thinking</label>
+                    <span id="problem-rating-val" class="score-pill score-pill-high">5 / 5.0</span>
+                  </div>
+                  <input type="range" id="problem-rating" class="rating-slider" min="1" max="5" step="1" value="5">
+                  <div class="rating-scale-labels">
+                    <span>1: Struggles with guidance</span>
+                    <span>2: Brute force only</span>
+                    <span>3: Solves with hints</span>
+                    <span>4: Optimal complexity</span>
+                    <span>5: Exceptional & proactive trade-offs</span>
+                  </div>
+                </div>
+
+                <!-- Competence 3: Communication -->
+                <div class="rating-group">
+                  <div class="rating-header">
+                    <label class="form-label" style="margin: 0;">3. Communication, Articulation & Engineering Empathy</label>
+                    <span id="comm-rating-val" class="score-pill score-pill-high">4 / 5.0</span>
+                  </div>
+                  <input type="range" id="comm-rating" class="rating-slider" min="1" max="5" step="1" value="4">
+                  <div class="rating-scale-labels">
+                    <span>1: Difficult to follow</span>
+                    <span>2: Needs constant prompts</span>
+                    <span>3: Clear baseline</span>
+                    <span>4: Structured & crisp</span>
+                    <span>5: Executive-level articulation</span>
+                  </div>
+                </div>
+
+                <!-- Overall Recommendation Radios -->
+                <div class="form-group" style="margin-top: 2rem;">
+                  <label class="form-label">Final Campus Hiring Recommendation</label>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin-top: 0.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem 1rem; border-radius: var(--radius-md); cursor: pointer;">
+                      <input type="radio" name="eval-decision" value="Strong Hire" checked>
+                      <span class="font-semibold text-success">★ Strong Hire</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem 1rem; border-radius: var(--radius-md); cursor: pointer;">
+                      <input type="radio" name="eval-decision" value="Hire">
+                      <span class="font-semibold text-primary">✓ Hire</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem 1rem; border-radius: var(--radius-md); cursor: pointer;">
+                      <input type="radio" name="eval-decision" value="Borderline">
+                      <span class="font-semibold text-warning">? Borderline</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem 1rem; border-radius: var(--radius-md); cursor: pointer;">
+                      <input type="radio" name="eval-decision" value="No Hire">
+                      <span class="font-semibold text-danger">✕ No Hire</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Qualitative Notes -->
+                <div class="form-group" style="margin-top: 1.5rem;">
+                  <label class="form-label">Qualitative Interviewer Observations & System Design Notes</label>
+                  <textarea id="interviewer-notes" class="form-control" rows="4" placeholder="Detail key responses, behavioral signals, or areas where the candidate shined..."></textarea>
+                </div>
+
+                <div class="card-footer" style="padding: 1.5rem 0 0 0; background: transparent; border-top: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <span class="text-xs text-muted">Submitting will automatically compile candidate feedback & unlock offer flow if recommended.</span>
+                  <button type="submit" class="btn btn-ai btn-lg">
+                    <span>✨ Submit Scorecard & Auto-Draft Candidate Feedback</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Auto-Drafted Feedback Report Modal -->
+  <div id="feedback-report-modal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.25rem;">✨</span>
+          <h3 class="modal-title">AI Constructive Candidate Feedback Report</h3>
+        </div>
+        <button class="btn-modal-close" onclick="InterviewerApp.closeFeedbackReportModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 1.5rem; font-family: var(--font-sans);">
+          <div id="feedback-report-content">
+            <!-- Rendered feedback report content -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="InterviewerApp.closeFeedbackReportModal()">Close</button>
+        <button class="btn btn-primary" onclick="InterviewerApp.copyFeedbackReport()">
+          <span>📋 Copy Report to Clipboard</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Virtual Room Modal Simulation -->
+  <div id="interview-room-modal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">HireSmart Virtual Interview Room (Interviewer View)</h3>
+        <button class="btn-modal-close" onclick="InterviewerApp.closeVirtualRoomModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="background: #020617; color: white; padding: 2rem; text-align: center;">
+        <div style="background: #0f172a; border-radius: var(--radius-lg); padding: 3rem 1.5rem; border: 1px solid #1e293b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">👩‍🏫 ↔️ 🧑‍💻</div>
+          <h3 style="color: white; margin-bottom: 0.5rem;">Interviewer Session Active</h3>
+          <p style="color: #94a3b8; font-size: 0.9rem;">
+            Candidate: <span id="copilot-room-cand-name" style="color: white; font-weight: 600;">Candidate</span> • 
+            Interviewer: <span style="color: white; font-weight: 600;">Dr. Priya Nair (You)</span>
+          </p>
+          <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.75rem;">
+            <span class="badge badge-success">Encrypted Video Feed Active</span>
+            <span class="badge badge-purple">Copilot Prompts Synced</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="InterviewerApp.closeVirtualRoomModal()">
+          <span>Disconnect Call</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Auth Modal -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Switch Persona</h3>
+        <button class="btn-modal-close" onclick="HireSmartAuth.closeAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('candidate')">Candidate (Aarav Sharma)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('recruiter')">Recruiter (Sarah Jenkins)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('interviewer')">Interviewer (Dr. Priya Nair)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('admin')">Admin (Vikram Malhotra)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mock_data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/interviewer.js"></script>
+</body>
+</html>

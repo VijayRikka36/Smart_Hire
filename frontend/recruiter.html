@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruiter Studio – HireSmart AI</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">⚡</div>
+          <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+        </a>
+        <span class="sidebar-portal-tag" style="background: rgba(162, 28, 175, 0.2); color: #f472b6;">Recruiter</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item active" data-tab="ranking">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-label">AI Candidate Ranking</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="drives">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Active Drives & Applications</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="post">
+          <span class="nav-icon">➕</span>
+          <span class="nav-label">Post New Job</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar dashboard-user-avatar" style="background: linear-gradient(135deg, #a21caf, #e11d48);">SJ</div>
+          <div class="user-details">
+            <div class="user-name dashboard-user-name">Sarah Jenkins</div>
+            <div class="user-role-label dashboard-user-role">Lead Talent Partner</div>
+          </div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="HireSmartAuth.logout()" title="Sign Out">⎋</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Recruiter Studio</span>
+            <span>/</span>
+            <span class="breadcrumb-active">AI Candidate Ranking</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Role Quick Switcher -->
+          <div class="header-quick-switch">
+            <a href="candidate.html" class="quick-switch-item" data-role="candidate">Candidate</a>
+            <a href="recruiter.html" class="quick-switch-item active" data-role="recruiter">Recruiter</a>
+            <a href="interviewer.html" class="quick-switch-item" data-role="interviewer">Interviewer</a>
+            <a href="admin.html" class="quick-switch-item" data-role="admin">Admin</a>
+          </div>
+
+          <button class="header-btn-icon" title="Notifications">
+            <span>🔔</span>
+            <span class="badge-unread-dot"></span>
+          </button>
+
+          <div class="user-avatar dashboard-user-avatar" style="width: 34px; height: 34px; background: linear-gradient(135deg, #a21caf, #e11d48);">SJ</div>
+        </div>
+      </header>
+
+      <!-- Page Body -->
+      <main class="page-body">
+
+        <!-- ==========================================
+             TAB 1: AI CANDIDATE RANKING
+             ========================================== -->
+        <section class="tab-content active" data-tab-content="ranking">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">AI Candidate Leaderboard & Screening</h1>
+              <p class="page-subtitle">Multi-modal ranking of campus applicants evaluating extracted skills against role expectations without demographic bias.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <button id="btn-run-screening" class="btn btn-ai" onclick="RecruiterApp.runAIScreening()">
+                <span>✨ Run AI Screening</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="card" style="margin-bottom: 1.25rem;">
+            <div class="card-body" style="padding: 1rem 1.25rem;">
+              <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 280px; position: relative;">
+                  <input type="text" id="candidate-search-input" class="form-control" placeholder="Search by candidate name, college, or skill (e.g. PyTorch)..." oninput="RecruiterApp.searchCandidates()">
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <span class="text-xs text-muted">Showing 8 Top Qualified Profiles</span>
+                  <button class="btn btn-outline btn-sm" onclick="RecruiterApp.runAIScreening()">⚡ Re-Rank</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Candidate Ranking Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Campus Applicant Screening Pool</h3>
+              <span class="badge badge-success">100% Anonymized Evaluation</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Candidate Name & Contact</th>
+                    <th>College & Degree</th>
+                    <th>CGPA</th>
+                    <th>Extracted Skills (AI Parsed)</th>
+                    <th>AI Match Score</th>
+                    <th>Recommendation</th>
+                    <th>Recruiter Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="candidate-ranking-table-body">
+                  <!-- Dynamically populated by RecruiterApp.renderCandidateRankingTable() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: ACTIVE DRIVES & APPLICATIONS
+             ========================================== -->
+        <section class="tab-content" data-tab-content="drives">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Active Campus Drives & Applicant Volumes</h1>
+              <p class="page-subtitle">Track applicant funnel metrics and capacity across open campus hiring requisitions.</p>
+            </div>
+            <button class="btn btn-primary" onclick="document.querySelector('.sidebar-nav-item[data-tab=\'post\']').click()">
+              <span>➕ Post New Drive</span>
+            </button>
+          </div>
+
+          <!-- Metric Cards -->
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Total Openings</span>
+                <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">💼</div>
+              </div>
+              <div class="stat-value">70</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-up">↑ 14%</span>
+                <span>Across 5 engineering roles</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Total Resumes</span>
+                <div class="stat-icon" style="background: var(--ai-purple-light); color: var(--ai-purple-text);">📄</div>
+              </div>
+              <div class="stat-value">15,000</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-up">↑ 22%</span>
+                <span>Campus batch 2026</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">AI Screen Passed</span>
+                <div class="stat-icon" style="background: var(--success-light); color: var(--success-text);">⚡</div>
+              </div>
+              <div class="stat-value">3,200</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-neutral">21.3%</span>
+                <span>Threshold &gt; 75% Fit</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Interviews Scheduled</span>
+                <div class="stat-icon" style="background: var(--info-light); color: var(--info-text);">📅</div>
+              </div>
+              <div class="stat-value">950</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-up">650 Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Jobs Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Current Campus Drives</h3>
+              <span class="badge badge-primary">5 Active Roles</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Job Title & Track</th>
+                    <th>Status</th>
+                    <th>Min CGPA</th>
+                    <th>Openings</th>
+                    <th>Applicant Volume</th>
+                    <th>Drive Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="active-jobs-table-body">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: POST NEW JOB
+             ========================================== -->
+        <section class="tab-content" data-tab-content="post">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Post New Campus Drive Requisition</h1>
+              <p class="page-subtitle">Configure minimum academic bars, technical requirements, and target headcount for university placement drives.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Drive Parameters & Candidate Criteria</h3>
+              <span class="badge badge-purple">AI Matching Enabled</span>
+            </div>
+            <div class="card-body">
+              <form id="post-job-form" onsubmit="RecruiterApp.handlePostJobSubmit(event)">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Job Title</label>
+                    <input type="text" id="job-title" class="form-control" placeholder="e.g. Associate Cloud Infrastructure Engineer" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Engineering Department</label>
+                    <select id="job-dept" class="form-control">
+                      <option value="AI Research & Platform">AI Research & Platform</option>
+                      <option value="Product Engineering">Product Engineering</option>
+                      <option value="Data Infrastructure">Data Infrastructure</option>
+                      <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+                      <option value="Customer Engineering">Customer Engineering</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Target Openings</label>
+                    <input type="number" id="job-openings" class="form-control" min="1" max="100" value="10" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Minimum Academic CGPA</label>
+                    <input type="number" step="0.1" min="0" max="10" id="job-min-cgpa" class="form-control" value="7.5" required>
+                    <span class="form-helper">Candidates below this CGPA cannot submit applications.</span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Campus Drive Date</label>
+                    <input type="date" id="job-drive-date" class="form-control" value="2026-11-20" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Office Location</label>
+                    <input type="text" id="job-location" class="form-control" value="Bengaluru / Hybrid" required>
+                  </div>
+                </div>
+
+                <!-- Interactive Skills Tag Input -->
+                <div class="form-group">
+                  <label class="form-label">Required Skills & Technologies (Press Enter or click Add)</label>
+                  <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="text" id="job-skill-input" class="form-control" placeholder="e.g. Kubernetes, Golang, PyTorch...">
+                    <button type="button" class="btn btn-secondary" onclick="RecruiterApp.addSkillFromInput()">Add Tag</button>
+                  </div>
+                  <div id="job-skills-tag-container" style="min-height: 38px;">
+                    <!-- Tag chips rendered here -->
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Job Description & Project Expectations</label>
+                  <textarea id="job-desc" class="form-control" rows="4" placeholder="Detail the core technical challenges, daily responsibilities, and team culture..."></textarea>
+                </div>
+
+                <div class="card-footer" style="padding: 1.25rem 0 0 0; background: transparent; border-top: 1px solid var(--slate-200);">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    <span>🚀 Publish Campus Drive</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Interview Scheduler Modal -->
+  <div id="interview-scheduler-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Schedule Campus Technical Interview</h3>
+        <button class="btn-modal-close" onclick="RecruiterApp.closeScheduleModal()">&times;</button>
+      </div>
+      <form onsubmit="RecruiterApp.confirmScheduleInterview(event)">
+        <div class="modal-body">
+          <!-- Candidate Mini Dossier Banner -->
+          <div style="background: var(--primary-light); border: 1px solid var(--primary-border); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem;">
+            <div id="sched-cand-name" class="font-bold text-primary" style="font-size: 1.1rem;">Aarav Sharma</div>
+            <div id="sched-cand-college" class="text-xs text-muted">IIT Bombay • CGPA 9.24</div>
+            <div id="sched-cand-role" class="text-xs font-semibold" style="margin-top: 0.25rem; color: var(--slate-700);">Associate AI/ML Engineer (GenAI Core)</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Interview Date</label>
+              <input type="date" id="sched-date-input" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time Slot</label>
+              <select id="sched-time-input" class="form-control">
+                <option value="10:00 IST">10:00 AM IST</option>
+                <option value="11:30 IST">11:30 AM IST</option>
+                <option value="14:30 IST" selected>02:30 PM IST</option>
+                <option value="16:00 IST">04:00 PM IST</option>
+                <option value="17:30 IST">05:30 PM IST</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assign Technical Interviewer</label>
+            <select id="sched-interviewer-select" class="form-control">
+              <option value="Dr. Priya Nair (Principal AI Architect)">Dr. Priya Nair (Principal AI Architect)</option>
+              <option value="Rajesh Verma (VP of Infrastructure)">Rajesh Verma (VP of Infrastructure)</option>
+              <option value="Ananya Iyer (Senior Staff ML Engineer)">Ananya Iyer (Senior Staff ML Engineer)</option>
+              <option value="Amitabh Sharma (Staff Platform Lead)">Amitabh Sharma (Staff Platform Lead)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Evaluation Round Type</label>
+            <select id="sched-round-select" class="form-control">
+              <option value="Technical Deep Dive & GenAI Architecture">Technical Deep Dive & GenAI Architecture</option>
+              <option value="Coding, Algorithms & Concurrency">Coding, Algorithms & Concurrency</option>
+              <option value="System Design & Scalability">System Design & Scalability</option>
+              <option value="Culture, Ownership & Behavioral">Culture, Ownership & Behavioral</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Virtual Video Meeting Room</label>
+            <input type="text" class="form-control" value="Auto-generated HireSmart Room (WebRTC HD + Live Codeboard)" readonly style="background: var(--slate-100); color: var(--slate-600);">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="RecruiterApp.closeScheduleModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <span>✓ Confirm & Notify Candidate</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Unified Auth Modal -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Switch Persona</h3>
+        <button class="btn-modal-close" onclick="HireSmartAuth.closeAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('candidate')">Candidate (Aarav Sharma)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('recruiter')">Recruiter (Sarah Jenkins)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('interviewer')">Interviewer (Dr. Priya Nair)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('admin')">Admin (Vikram Malhotra)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mock_data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/recruiter.js"></script>
+</body>
+</html>

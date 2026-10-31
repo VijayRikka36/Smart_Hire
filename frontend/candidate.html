@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Portal – HireSmart AI</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">⚡</div>
+          <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+        </a>
+        <span class="sidebar-portal-tag">Candidate</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item active" data-tab="profile">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">My Profile</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="upload">
+          <span class="nav-icon">📄</span>
+          <span class="nav-label">Upload Resume</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="drives">
+          <span class="nav-icon">💼</span>
+          <span class="nav-label">Available Drives</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="tracker">
+          <span class="nav-icon">🧭</span>
+          <span class="nav-label">My Applications & Tracker</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="offer">
+          <span class="nav-icon">🎓</span>
+          <span class="nav-label">Interview & Offer</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar dashboard-user-avatar">AS</div>
+          <div class="user-details">
+            <div class="user-name dashboard-user-name">Aarav Sharma</div>
+            <div class="user-role-label dashboard-user-role">IIT Bombay '26</div>
+          </div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="HireSmartAuth.logout()" title="Sign Out">⎋</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Shell -->
+    <div class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Candidate Portal</span>
+            <span>/</span>
+            <span class="breadcrumb-active">My Profile</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Role Quick Switcher -->
+          <div class="header-quick-switch">
+            <a href="candidate.html" class="quick-switch-item active" data-role="candidate">Candidate</a>
+            <a href="recruiter.html" class="quick-switch-item" data-role="recruiter">Recruiter</a>
+            <a href="interviewer.html" class="quick-switch-item" data-role="interviewer">Interviewer</a>
+            <a href="admin.html" class="quick-switch-item" data-role="admin">Admin</a>
+          </div>
+
+          <button class="header-btn-icon" title="Notifications">
+            <span>🔔</span>
+            <span class="badge-unread-dot"></span>
+          </button>
+
+          <div class="user-avatar dashboard-user-avatar" style="width: 34px; height: 34px;">AS</div>
+        </div>
+      </header>
+
+      <!-- Page Body Container -->
+      <main class="page-body">
+
+        <!-- ==========================================
+             TAB 1: MY PROFILE
+             ========================================== -->
+        <section class="tab-content active" data-tab-content="profile">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Candidate Profile & Academic Baseline</h1>
+              <p class="page-subtitle">Keep your verified university credentials, contact records, and primary skill tags up to date for campus drives.</p>
+            </div>
+            <button class="btn btn-primary" onclick="CandidateApp.saveProfile(event)">
+              <span>💾 Save Profile Changes</span>
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Student Academic Information</h3>
+              <span class="badge badge-success">Verified Campus Student</span>
+            </div>
+            <div class="card-body">
+              <form onsubmit="CandidateApp.saveProfile(event)">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="cand-name" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Institute Email</label>
+                    <input type="email" id="cand-email" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" id="cand-phone" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">University / College Name</label>
+                    <input type="text" id="cand-college" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Degree & Specialization</label>
+                    <input type="text" id="cand-degree" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Cumulative CGPA (out of 10.0)</label>
+                    <input type="number" step="0.01" min="0" max="10" id="cand-cgpa" class="form-control" required>
+                    <span class="form-helper">Official academic transcript verification will be required upon offer extension.</span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Graduation Year</label>
+                    <input type="number" id="cand-year" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Target Role Preference</label>
+                    <input type="text" id="cand-target-role" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label class="form-label">Primary Extracted Skills (Parsed by AI)</label>
+                  <div id="profile-skills-container" style="margin-top: 0.5rem; min-height: 38px;">
+                    <!-- Skill pills populated via JS -->
+                  </div>
+                  <span class="form-helper">Skills are automatically refreshed whenever you re-parse your resume in the Upload Resume tab.</span>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-primary" onclick="CandidateApp.saveProfile(event)">
+                <span>Save Profile Changes</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: UPLOAD RESUME
+             ========================================== -->
+        <section class="tab-content" data-tab-content="upload">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">AI Resume Parser & Skill Extraction</h1>
+              <p class="page-subtitle">Upload your resume to extract engineering competencies, project stacks, and calculate campus drive match scores.</p>
+            </div>
+            <button id="btn-analyze-resume" class="btn btn-ai" onclick="CandidateApp.triggerResumeAnalysis()">
+              <span>✨ Analyze & Extract Skills with AI</span>
+            </button>
+          </div>
+
+          <!-- Drag and drop zone -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">1. Upload Document (PDF / DOCX)</h3>
+              <span class="badge badge-purple">Gemini Multimodal Parser</span>
+            </div>
+            <div class="card-body">
+              <div id="resume-dropzone" class="dropzone-box" onclick="document.getElementById('resume-file-input').click()">
+                <input type="file" id="resume-file-input" style="display: none;" accept=".pdf,.docx,.txt">
+                <div id="dropzone-prompt">
+                  <div class="dropzone-icon">☁️</div>
+                  <h4 style="margin-bottom: 0.35rem;">Drag and drop your campus resume here</h4>
+                  <p class="text-sm text-muted">Supports PDF, DOCX up to 10MB. Or click to browse local files.</p>
+                </div>
+                <div id="file-selected-box" style="display: none; align-items: center; justify-content: center; gap: 0.75rem;">
+                  <span style="font-size: 1.5rem;">📄</span>
+                  <span id="selected-file-name" class="font-semibold text-primary">Resume.pdf</span>
+                  <span class="badge badge-success">Ready to parse</span>
+                </div>
+              </div>
+
+              <!-- Textarea fallback -->
+              <div style="margin-top: 1.75rem;">
+                <label class="form-label">Or paste resume raw text directly:</label>
+                <textarea id="resume-paste-text" class="form-control" rows="5" placeholder="Paste your resume sections, projects, and tech stack here..."></textarea>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-ai" onclick="CandidateApp.triggerResumeAnalysis()">
+                <span>⚡ Run AI Skill Extraction</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Parsed skills result panel -->
+          <div id="resume-parsed-results" class="card" style="display: block;">
+            <div class="card-header">
+              <h3 class="card-title">Extracted Skills & Competency Mapping</h3>
+              <span class="badge badge-success">✓ 8 Skills Successfully Mapped</span>
+            </div>
+            <div class="card-body">
+              <p style="margin-bottom: 1rem; color: var(--slate-600);">
+                The AI extraction engine identified high semantic affinity in the following technologies:
+              </p>
+              <div id="parsed-skills-pills" style="margin-bottom: 1.5rem;">
+                <span class="skill-pill skill-pill-ai">⚡ Python</span>
+                <span class="skill-pill skill-pill-ai">⚡ PyTorch</span>
+                <span class="skill-pill skill-pill-ai">⚡ LangChain</span>
+                <span class="skill-pill skill-pill-ai">⚡ FastAPI</span>
+                <span class="skill-pill skill-pill-ai">⚡ Docker</span>
+                <span class="skill-pill skill-pill-ai">⚡ Vector DBs</span>
+                <span class="skill-pill skill-pill-ai">⚡ C++</span>
+                <span class="skill-pill skill-pill-ai">⚡ System Design</span>
+              </div>
+
+              <div class="gemini-box">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="font-size: 1.25rem;">✨</span>
+                  <h4 style="font-size: 0.95rem; color: var(--ai-purple-text); margin: 0;">AI Resume Synthesis Summary</h4>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--slate-700); line-height: 1.6;">
+                  Candidate showcases deep hands-on proficiency in Generative AI architectures, vector retrieval pipelines, and distributed low-latency backend systems. Demonstrated implementation of custom RAG engines and quantized model deployments positions them in the <strong>top 6% of campus applicants</strong> for AI/ML roles.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: AVAILABLE DRIVES
+             ========================================== -->
+        <section class="tab-content" data-tab-content="drives">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Active Campus Recruitment Drives</h1>
+              <p class="page-subtitle">Explore open roles scheduled for your campus batch. Eligibility criteria is verified dynamically against your academic CGPA.</p>
+            </div>
+          </div>
+
+          <!-- Grid of Campus Job Cards -->
+          <div id="drives-grid-container" class="job-grid">
+            <!-- Dynamically populated by CandidateApp.renderDrivesGrid() -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 4: MY APPLICATIONS & TRACKER
+             ========================================== -->
+        <section class="tab-content" data-tab-content="tracker">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Application Status & Live Pipeline Tracker</h1>
+              <p class="page-subtitle">Track your recruitment milestones in real time from initial screening to final offer rollout.</p>
+            </div>
+            <!-- Demo stage simulator -->
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="text-xs text-muted" style="align-self: center;">Test Stage Transitions:</span>
+              <button class="btn btn-outline btn-sm" onclick="CandidateApp.setDemoCandidateState('Applied')">Applied</button>
+              <button class="btn btn-outline btn-sm" onclick="CandidateApp.setDemoCandidateState('Shortlisted')">Shortlisted</button>
+              <button class="btn btn-outline btn-sm" onclick="CandidateApp.setDemoCandidateState('Interview Scheduled')">Interview Scheduled</button>
+              <button class="btn btn-outline btn-sm" onclick="CandidateApp.setDemoCandidateState('Offered')">Offered</button>
+            </div>
+          </div>
+
+          <!-- Stepper Card -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 id="tracker-job-title" class="card-title">Associate AI/ML Engineer (GenAI Core)</h3>
+                <span class="text-xs text-muted">Applied on <span id="tracker-applied-date">2026-10-18</span> • Application ID: #HS-APP-9201</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span id="tracker-match-score" class="score-pill score-pill-high">94% AI Fit</span>
+                <span id="tracker-current-status-badge" class="badge badge-purple">Interview Scheduled</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Visual Stepper Progress Bar -->
+              <div class="stepper-container">
+                <div id="tracker-progress-line" class="stepper-progress-line" style="width: 66%;"></div>
+
+                <div id="step-node-1" class="step-node completed">
+                  <div class="step-circle">✓</div>
+                  <div class="step-label">1. Applied</div>
+                  <div class="text-xs text-muted">Resume Received</div>
+                </div>
+
+                <div id="step-node-2" class="step-node completed">
+                  <div class="step-circle">✓</div>
+                  <div class="step-label">2. AI Screened</div>
+                  <div class="text-xs text-muted">Shortlist Score &gt; 85%</div>
+                </div>
+
+                <div id="step-node-3" class="step-node active">
+                  <div class="step-circle">3</div>
+                  <div class="step-label">3. Interview Scheduled</div>
+                  <div class="text-xs text-muted">Technical Deep Dive</div>
+                </div>
+
+                <div id="step-node-4" class="step-node">
+                  <div class="step-circle">4</div>
+                  <div class="step-label">4. Final Decision</div>
+                  <div class="text-xs text-muted">Offer Evaluation</div>
+                </div>
+              </div>
+
+              <!-- Current stage narrative card -->
+              <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.35rem;">Current Pipeline Status</h4>
+                <p style="font-size: 0.88rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                  Your profile has cleared automated AI screening with high recommendation. You have a technical interview scheduled with our AI platform team.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                  <button class="btn btn-primary btn-sm" onclick="document.querySelector('.sidebar-nav-item[data-tab=\'offer\']').click()">
+                    <span>View Scheduled Interview & Room Link →</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 5: INTERVIEW & OFFER
+             ========================================== -->
+        <section class="tab-content" data-tab-content="offer">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Campus Interview & Employment Offer</h1>
+              <p class="page-subtitle">Access your assigned interview panel details and view or accept your formal campus offer letter.</p>
+            </div>
+          </div>
+
+          <!-- Scheduled Interview Card -->
+          <div id="interview-schedule-card" class="card" style="border-left: 4px solid var(--primary);">
+            <div class="card-header">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 1.5rem;">📅</span>
+                <div>
+                  <h3 class="card-title">Technical Deep Dive & GenAI Architecture</h3>
+                  <span class="text-xs text-muted">Campus Placement Round 1</span>
+                </div>
+              </div>
+              <span class="badge badge-success">Confirmed Slot</span>
+            </div>
+            <div class="card-body">
+              <div class="form-row" style="margin-bottom: 1.25rem;">
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">Date & Time</span>
+                  <span id="int-date-time" class="font-semibold text-lg">2026-11-04 at 14:30 IST</span>
+                </div>
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">Lead Interviewer</span>
+                  <span id="int-interviewer" class="font-semibold text-lg">Dr. Priya Nair (Principal AI Architect)</span>
+                </div>
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">Evaluation Round</span>
+                  <span id="int-round" class="font-semibold text-lg">Technical Deep Dive & GenAI Architecture</span>
+                </div>
+              </div>
+
+              <div style="background: var(--primary-light); border: 1px solid var(--primary-border); border-radius: var(--radius-md); padding: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <div class="font-semibold text-primary">HireSmart Virtual Video Conference Room</div>
+                  <span class="text-xs text-muted">Screen sharing and code collaboration enabled.</span>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="CandidateApp.joinMockInterviewRoom()">
+                  <span>🎥 Join Video Room</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formal Offer Letter Card -->
+          <div id="offer-letter-card" class="card" style="border: 2px solid var(--success-border); background: linear-gradient(to bottom, #ffffff, #f0fdf4);">
+            <div class="card-header" style="background: transparent;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--success); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">🎓</div>
+                <div>
+                  <h3 class="card-title" style="color: var(--success-text);">Official Campus Placement Offer</h3>
+                  <span class="text-xs text-muted">Congratulations! You have received a formal employment offer.</span>
+                </div>
+              </div>
+              <span class="badge badge-success">Offer Extended</span>
+            </div>
+            <div class="card-body">
+              <p style="margin-bottom: 1.25rem; color: var(--slate-700);">
+                The recruitment board and interviewing committee have extended an official offer for the <strong>Associate AI/ML Engineer</strong> position at our Bengaluru Technology Headquarters.
+              </p>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-success" onclick="CandidateApp.openOfferLetterModal()">
+                  <span>📄 View Full Offer Letter & Compensation Breakdown</span>
+                </button>
+                <button class="btn btn-outline" onclick="CandidateApp.downloadOfferLetter()">
+                  <span>📥 Download PDF</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Offer Letter Document Modal -->
+  <div id="offer-letter-modal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Official Letter of Employment</h3>
+        <button class="btn-modal-close" onclick="CandidateApp.closeOfferLetterModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="background: var(--slate-100); padding: 1.5rem;">
+        <div class="offer-letter-doc">
+          <div class="offer-header-band">
+            <div>
+              <div class="brand-logo" style="margin-bottom: 0.25rem;">
+                <div class="brand-icon">⚡</div>
+                <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+              </div>
+              <span class="text-xs text-muted">University Campus Hiring Division • Confidential</span>
+            </div>
+            <div class="offer-seal">✓</div>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <p><strong>Candidate:</strong> <span id="offer-cand-name">Aarav Sharma</span></p>
+            <p><strong>Institution:</strong> <span id="offer-cand-college">IIT Bombay</span></p>
+            <p><strong>Offer Date:</strong> 2026-10-31</p>
+          </div>
+
+          <p style="margin-bottom: 1rem;">
+            Dear <span id="offer-cand-name-salutation">Candidate</span>,<br><br>
+            We are pleased to formally offer you the position of <strong id="offer-role-title">Associate AI/ML Engineer</strong> with HireSmart Technologies India Pvt. Ltd. Based on your outstanding performance in the campus technical interview rounds, we are excited to invite you to join our core AI engineering group.
+          </p>
+
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Compensation Component</th>
+                <th>Annual Value (INR)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Annual Fixed Base Salary</strong></td>
+                <td id="offer-base-value" class="font-semibold">₹18,00,000</td>
+                <td>Paid monthly via direct bank deposit</td>
+              </tr>
+              <tr>
+                <td><strong>Joining & Campus Bonus</strong></td>
+                <td id="offer-bonus-value" class="font-semibold">₹2,50,000</td>
+                <td>Disbursed with first month's salary</td>
+              </tr>
+              <tr>
+                <td><strong>Performance Stock Grants (ESOPs)</strong></td>
+                <td id="offer-esops-value" class="font-semibold">₹4,00,000</td>
+                <td>Vested over 4-year schedule</td>
+              </tr>
+              <tr style="background: var(--slate-50);">
+                <td><strong>Total Cost to Company (CTC)</strong></td>
+                <td id="offer-ctc-value" class="font-bold text-primary" style="font-size: 1.1rem;">₹24,50,000 CTC</td>
+                <td>Annualized aggregate package</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 1.5rem; font-size: 0.88rem; color: var(--slate-600);">
+            <p><strong>Tentative Joining Date:</strong> <span id="offer-joining-date">2026-07-01</span></p>
+            <p><strong>Reporting Work Location:</strong> <span id="offer-loc-value">Bengaluru Tech Center</span></p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--slate-300);">
+            <div>
+              <div style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 1.5rem; color: var(--primary);">Sarah Jenkins</div>
+              <div class="text-xs text-muted">Head of Global Talent Acquisition</div>
+            </div>
+            <div>
+              <div style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 1.5rem; color: var(--slate-700);">Dr. Priya Nair</div>
+              <div class="text-xs text-muted">Principal AI Architect</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="CandidateApp.downloadOfferLetter()">
+          <span>🖨️ Print / Save PDF</span>
+        </button>
+        <button id="btn-accept-offer" class="btn btn-success" onclick="CandidateApp.acceptOffer()">
+          <span>✓ Accept Campus Offer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Virtual Interview Room Simulation Modal -->
+  <div id="interview-room-modal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">HireSmart Virtual Interview Room</h3>
+        <button class="btn-modal-close" onclick="CandidateApp.closeInterviewRoomModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="background: #020617; color: white; padding: 2rem; text-align: center;">
+        <div style="background: #0f172a; border-radius: var(--radius-lg); padding: 3rem 1.5rem; margin-bottom: 1.5rem; border: 1px solid #1e293b;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🧑‍💻 ↔️ 👩‍🏫</div>
+          <h3 style="color: white; margin-bottom: 0.5rem;">Live Interview in Progress</h3>
+          <p style="color: #94a3b8; font-size: 0.9rem;">
+            Candidate: <span id="mock-room-cand-name" style="color: white; font-weight: 600;">Aarav Sharma</span> • 
+            Interviewer: <span id="mock-room-interviewer" style="color: white; font-weight: 600;">Dr. Priya Nair</span>
+          </p>
+          <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.8rem; color: #34d399;">
+            <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+            <span>HD Audio & Video Encrypted Session Active</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="CandidateApp.closeInterviewRoomModal()">
+          <span>Leave Room</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Auth Modal (for switching or sign out) -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Switch Persona</h3>
+        <button class="btn-modal-close" onclick="HireSmartAuth.closeAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('candidate')">Candidate (Aarav Sharma)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('recruiter')">Recruiter (Sarah Jenkins)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('interviewer')">Interviewer (Dr. Priya Nair)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('admin')">Admin (Vikram Malhotra)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mock_data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/candidate.js"></script>
+</body>
+</html>

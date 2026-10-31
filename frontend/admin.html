@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Control Center – HireSmart AI</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">⚡</div>
+          <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+        </a>
+        <span class="sidebar-portal-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Admin</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item active" data-tab="analytics">
+          <span class="nav-icon">📈</span>
+          <span class="nav-label">Hiring Funnel Analytics</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="colleges">
+          <span class="nav-icon">🏛️</span>
+          <span class="nav-label">Manage Colleges & Drives</span>
+        </li>
+        <li class="sidebar-nav-item" data-tab="fairness">
+          <span class="nav-icon">⚖️</span>
+          <span class="nav-label">Fairness & Bias Audit</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar dashboard-user-avatar" style="background: linear-gradient(135deg, #0f172a, #334155);">VM</div>
+          <div class="user-details">
+            <div class="user-name dashboard-user-name">Vikram Malhotra</div>
+            <div class="user-role-label dashboard-user-role">VP University Talent</div>
+          </div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="HireSmartAuth.logout()" title="Sign Out">⎋</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">☰</button>
+          <div class="breadcrumb-trail">
+            <span>Admin Control Center</span>
+            <span>/</span>
+            <span class="breadcrumb-active">Hiring Funnel Analytics</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Role Quick Switcher -->
+          <div class="header-quick-switch">
+            <a href="candidate.html" class="quick-switch-item" data-role="candidate">Candidate</a>
+            <a href="recruiter.html" class="quick-switch-item" data-role="recruiter">Recruiter</a>
+            <a href="interviewer.html" class="quick-switch-item" data-role="interviewer">Interviewer</a>
+            <a href="admin.html" class="quick-switch-item active" data-role="admin">Admin</a>
+          </div>
+
+          <button class="header-btn-icon" title="Notifications">
+            <span>🔔</span>
+            <span class="badge-unread-dot"></span>
+          </button>
+
+          <div class="user-avatar dashboard-user-avatar" style="width: 34px; height: 34px; background: linear-gradient(135deg, #0f172a, #334155);">VM</div>
+        </div>
+      </header>
+
+      <!-- Page Body -->
+      <main class="page-body">
+
+        <!-- ==========================================
+             TAB 1: HIRING FUNNEL ANALYTICS
+             ========================================== -->
+        <section class="tab-content active" data-tab-content="analytics">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">University Recruitment Funnel Analytics</h1>
+              <p class="page-subtitle">Real-time conversion metrics and automated stage drop-off bottleneck alerts across 15,000 campus applicants.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-outline" onclick="AdminApp.exportFunnelReport()">
+                <span>📊 Export Funnel Telemetry (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Top 4 KPI Metric Cards -->
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Total Resumes Received</span>
+                <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">📥</div>
+              </div>
+              <div id="kpi-total-resumes" class="stat-value">15,000</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-up">↑ 24% YoY</span>
+                <span>Across 7 premier universities</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">AI Screen Passed</span>
+                <div class="stat-icon" style="background: var(--ai-purple-light); color: var(--ai-purple-text);">⚡</div>
+              </div>
+              <div id="kpi-ai-screen" class="stat-value">3,200</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-neutral">21.3% Conversion</span>
+                <span>Threshold: Score &ge; 75%</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Interviews Completed</span>
+                <div class="stat-icon" style="background: var(--info-light); color: var(--info-text);">🎙️</div>
+              </div>
+              <div id="kpi-interviews" class="stat-value">650</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-neutral">20.3% of Screened</span>
+                <span>950 slots scheduled</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-card-title">Offers Extended</span>
+                <div class="stat-icon" style="background: var(--success-light); color: var(--success-text);">🎓</div>
+              </div>
+              <div id="kpi-offers" class="stat-value">300</div>
+              <div class="stat-meta">
+                <span class="trend-badge trend-up">46.2% Interview Yield</span>
+                <span>Net Funnel Yield: 2.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Funnel Drop-off Table with Bottleneck Alerts -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">End-to-End Funnel Conversion & Bottleneck Diagnostic</h3>
+                <span class="text-xs text-muted">Automated detection of candidate drop-off and interviewer bandwidth constraints</span>
+              </div>
+              <span class="badge badge-primary">Dynamic Algorithmic Audit</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Recruitment Funnel Stage</th>
+                    <th>Volume</th>
+                    <th>Stage Conversion</th>
+                    <th>Net Funnel Yield</th>
+                    <th>Stage Drop-off</th>
+                    <th>Status</th>
+                    <th>Automated Bottleneck Alert</th>
+                  </tr>
+                </thead>
+                <tbody id="funnel-stages-table-body">
+                  <!-- Populated dynamically via AdminApp.renderFunnelTable() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: MANAGE COLLEGES & DRIVES
+             ========================================== -->
+        <section class="tab-content" data-tab-content="colleges">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Campus Drives & Institutional Partnerships</h1>
+              <p class="page-subtitle">Coordinate multi-campus recruitment calendars, drive logistics, and registered student batches.</p>
+            </div>
+            <button class="btn btn-primary" onclick="AdminApp.openAddCollegeModal()">
+              <span>🏛️ Add College Drive</span>
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Accredited University Drives (2026 Batch)</h3>
+              <span class="badge badge-success">7 Partner Institutes</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>College Name & Registration</th>
+                    <th>Institutional Tier</th>
+                    <th>Target Batch</th>
+                    <th>Drive Date</th>
+                    <th>Talent Partner</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="colleges-table-body">
+                  <!-- Populated by AdminApp.renderCollegesTable() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: FAIRNESS & BIAS AUDIT
+             ========================================== -->
+        <section class="tab-content" data-tab-content="fairness">
+          <div class="page-header-row">
+            <div>
+              <h1 class="page-title">Algorithmic Fairness, Diversity & Bias Audit</h1>
+              <p class="page-subtitle">Continuous automated verification guaranteeing candidate evaluation operates with 100% anonymization and demographic blinding.</p>
+            </div>
+            <button id="btn-reaudit" class="btn btn-ai" onclick="AdminApp.triggerAlgorithmicReAudit()">
+              <span>🛡️ Run Live Adversarial Audit</span>
+            </button>
+          </div>
+
+          <!-- Comprehensive Fairness Verification Card -->
+          <div class="card" style="border-left: 4px solid var(--success); background: linear-gradient(to right, #ffffff, #f0fdf4);">
+            <div class="card-header" style="background: transparent;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--success-light); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚖️</div>
+                <div>
+                  <h3 class="card-title" style="color: var(--success-text);">100% Anonymization Engine Active</h3>
+                  <span class="text-xs text-muted">Zero-tolerance demographic token masking enforced before semantic embedding generation.</span>
+                </div>
+              </div>
+              <span class="badge badge-success">EEOC Four-Fifths Compliant</span>
+            </div>
+            <div class="card-body">
+              <p style="color: var(--slate-700); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                All demographic markers—including <strong>Candidate Gender, Caste, Religion, Parental Pedigree, Residential Pincodes, Photos, and Age</strong>—are programmatically stripped from candidate dossiers prior to LLM scoring and vector embeddings. Candidate rankings are derived exclusively from verified technical competencies, open-source project commits, and system architecture evaluations.
+              </p>
+
+              <!-- Parity Metrics Grid -->
+              <div class="form-row" style="background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 1.25rem;">
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">Adverse Impact Parity Ratio</span>
+                  <span class="font-bold text-success" style="font-size: 1.5rem;">0.992</span>
+                  <div class="text-xs text-muted">Legal benchmark &ge; 0.80</div>
+                </div>
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">Protected Group Pass Variance</span>
+                  <span class="font-bold text-primary" style="font-size: 1.5rem;">&lt; 1.2%</span>
+                  <div class="text-xs text-muted">Within statistical parity envelope</div>
+                </div>
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">False Negative Disparity</span>
+                  <span class="font-bold text-slate-800" style="font-size: 1.5rem;">0.8%</span>
+                  <div class="text-xs text-muted">Across all college tiers</div>
+                </div>
+                <div>
+                  <span class="text-xs text-muted" style="display: block;">PII Masking Integrity</span>
+                  <span class="font-bold text-success" style="font-size: 1.5rem;">100%</span>
+                  <div class="text-xs text-muted">Zero demographic leaks detected</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit Logs Table -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Verifiable Algorithmic Audit Trail</h3>
+              <span class="badge badge-purple">Cryptographically Logged</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp (IST)</th>
+                    <th>Audit Verification Event</th>
+                    <th>Diagnostic Scope & Details</th>
+                    <th>Result Status</th>
+                    <th>Auditor Authority</th>
+                  </tr>
+                </thead>
+                <tbody id="bias-audit-table-body">
+                  <!-- Populated by AdminApp.renderAuditLogs() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Add College Drive Modal -->
+  <div id="add-college-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Register New Campus Placement Drive</h3>
+        <button class="btn-modal-close" onclick="AdminApp.closeAddCollegeModal()">&times;</button>
+      </div>
+      <form id="add-college-form" onsubmit="AdminApp.handleAddCollegeSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">University / College Full Name</label>
+            <input type="text" id="new-col-name" class="form-control" placeholder="e.g. National Institute of Technology Karnataka (NITK)" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Institutional Tier</label>
+              <select id="new-col-tier" class="form-control">
+                <option value="Tier 1">Tier 1 (IIT / BITS / Top NIT)</option>
+                <option value="Tier 2">Tier 2 (State Premier / Central)</option>
+                <option value="Tier 3">Tier 3 (Accredited Engineering)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Batch Year</label>
+              <select id="new-col-batch" class="form-control">
+                <option value="Batch 2026" selected>Batch 2026</option>
+                <option value="Batch 2027">Batch 2027</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Drive Commencement Date</label>
+              <input type="date" id="new-col-date" class="form-control" value="2026-11-28" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Estimated Registered Students</label>
+              <input type="number" id="new-col-registered" class="form-control" value="1800" min="50" max="10000" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assigned Campus Talent Partner</label>
+            <select id="new-col-lead" class="form-control">
+              <option value="Sarah Jenkins">Sarah Jenkins (Lead University Partner)</option>
+              <option value="Amitabh Sharma">Amitabh Sharma (Campus Operations Lead)</option>
+              <option value="Kavita Menon">Kavita Menon (Regional Talent Manager)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="AdminApp.closeAddCollegeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <span>✓ Register Campus Drive</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Unified Auth Modal -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Switch Persona</h3>
+        <button class="btn-modal-close" onclick="HireSmartAuth.closeAuthModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('candidate')">Candidate (Aarav Sharma)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('recruiter')">Recruiter (Sarah Jenkins)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('interviewer')">Interviewer (Dr. Priya Nair)</button>
+          <button class="btn btn-outline" onclick="HireSmartAuth.loginAs('admin')">Admin (Vikram Malhotra)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mock_data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

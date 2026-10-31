@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HireSmart AI – Campus Hiring & GenAI Recruitment Platform</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Specific auth modal tab and pill styling */
+    .auth-tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--slate-200);
+      margin-bottom: 1.5rem;
+    }
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+      color: var(--slate-500);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+    .auth-tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    .role-switcher-group {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .role-switcher-pill {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.25rem;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .role-switcher-pill:hover {
+      background: var(--slate-200);
+      color: var(--slate-900);
+    }
+    .role-switcher-pill.active {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Landing Navigation -->
+  <header class="landing-nav">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">⚡</div>
+      <span>HireSmart<span style="color: var(--primary);">AI</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how-it-works">Architecture</a></li>
+      <li><a href="#quick-launch">Live Personas</a></li>
+      <li><a href="#compliance">Bias Governance</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn btn-outline" onclick="HireSmartAuth.openAuthModal('candidate', 'login')">Sign In</button>
+      <button class="btn btn-ai" onclick="HireSmartAuth.openAuthModal('recruiter', 'register')">Get Started</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="hero-pill">
+        <span>✨ Next-Gen Campus Talent Platform</span>
+        <span style="opacity: 0.5;">|</span>
+        <span>Powered by Gemini & Anonymized AI</span>
+      </div>
+      <h1 class="hero-title">
+        Transform Campus Recruitment with <br>
+        <span class="hero-gradient-text">Bias-Free GenAI Intelligence</span>
+      </h1>
+      <p class="hero-subtitle">
+        HireSmart AI bridges top universities with elite engineering teams. From 15,000+ unformatted student resumes to real-time Gemini-tailored technical scorecards, streamline your campus drives in hours instead of weeks.
+      </p>
+
+      <div class="hero-cta-group">
+        <button class="btn btn-primary btn-lg" onclick="HireSmartAuth.openAuthModal('recruiter', 'login')">
+          <span>Enter Recruiter Studio</span>
+          <span>→</span>
+        </button>
+        <button class="btn btn-secondary btn-lg" onclick="HireSmartAuth.openAuthModal('candidate', 'login')">
+          <span>Candidate Portal Demo</span>
+        </button>
+      </div>
+
+      <!-- Live Synthetic Funnel Metrics Ticker -->
+      <div class="ticker-strip">
+        <div class="ticker-item">
+          <div class="ticker-value" style="color: var(--primary);">15,000</div>
+          <div class="ticker-label">Resumes Processed</div>
+        </div>
+        <div class="ticker-item">
+          <div class="ticker-value" style="color: #7c3aed;">3,200</div>
+          <div class="ticker-label">AI Screened & Ranked</div>
+        </div>
+        <div class="ticker-item">
+          <div class="ticker-value" style="color: var(--info);">650</div>
+          <div class="ticker-label">Copilot Interviews</div>
+        </div>
+        <div class="ticker-item">
+          <div class="ticker-value" style="color: var(--success);">100%</div>
+          <div class="ticker-label">Anonymized Bias Audit</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Launch Role Cards Section -->
+    <section id="quick-launch" class="features-container">
+      <div class="section-header">
+        <div class="badge badge-purple" style="margin-bottom: 0.75rem;">Interactive Live Sandbox</div>
+        <h2>One-Click Live Demo Personas</h2>
+        <p>Explore the fully functional platform across all 4 stakeholder roles with pre-populated datasets.</p>
+      </div>
+
+      <div class="quick-launch-grid">
+        <!-- Candidate Card -->
+        <div class="role-card" onclick="HireSmartAuth.loginAs('candidate')">
+          <div>
+            <span class="role-badge" style="background: var(--primary-light); color: var(--primary);">Student Candidate</span>
+            <h3 style="margin-bottom: 0.5rem;">Aarav Sharma</h3>
+            <p class="text-sm text-muted" style="margin-bottom: 1rem;">Final Year B.Tech CSE • IIT Bombay</p>
+            <p style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+              Profile management, drag-and-drop resume parser with skill pill extraction, job application tracker, and offer letter preview.
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width: 100%;">
+            <span>Launch Candidate Portal</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- Recruiter Card -->
+        <div class="role-card" onclick="HireSmartAuth.loginAs('recruiter')">
+          <div>
+            <span class="role-badge" style="background: #fdf4ff; color: #a21caf;">Campus Recruiter</span>
+            <h3 style="margin-bottom: 0.5rem;">Sarah Jenkins</h3>
+            <p class="text-sm text-muted" style="margin-bottom: 1rem;">Lead University Talent Partner</p>
+            <p style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+              Post campus job drives, trigger 1-click AI Screening to sort candidates by match score, and schedule candidate interview panels.
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width: 100%;">
+            <span>Launch Recruiter Studio</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- Interviewer Card -->
+        <div class="role-card" onclick="HireSmartAuth.loginAs('interviewer')">
+          <div>
+            <span class="role-badge" style="background: var(--ai-purple-light); color: var(--ai-purple-text);">Interviewer Copilot</span>
+            <h3 style="margin-bottom: 0.5rem;">Dr. Priya Nair</h3>
+            <p class="text-sm text-muted" style="margin-bottom: 1rem;">Principal AI Architect</p>
+            <p style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+              Access candidate dossier, generate 5 live Gemini questions with evaluation cues ("What to listen for"), and submit digital scorecards.
+            </p>
+          </div>
+          <button class="btn btn-ai btn-sm" style="width: 100%;">
+            <span>Launch Interviewer Copilot</span>
+            <span>✨</span>
+          </button>
+        </div>
+
+        <!-- Admin Card -->
+        <div class="role-card" onclick="HireSmartAuth.loginAs('admin')">
+          <div>
+            <span class="role-badge" style="background: var(--slate-100); color: var(--slate-800);">System Administrator</span>
+            <h3 style="margin-bottom: 0.5rem;">Vikram Malhotra</h3>
+            <p class="text-sm text-muted" style="margin-bottom: 1rem;">VP of University Talent</p>
+            <p style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+              Review 15,000 resume funnel KPIs, stage conversion bottlenecks, manage campus drive schedules, and verify 100% algorithmic fairness.
+            </p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width: 100%;">
+            <span>Launch Admin Center</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform Features Grid -->
+    <section id="features" class="features-container">
+      <div class="section-header">
+        <div class="badge badge-primary" style="margin-bottom: 0.75rem;">Engineered for High-Velocity Campus Drives</div>
+        <h2>Enterprise Intelligence at Scale</h2>
+        <p>Purpose-built tools replacing fragmented spreadsheets with an end-to-end recruitment command center.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--primary-light); color: var(--primary);">📄</div>
+          <h4 style="margin-bottom: 0.5rem;">Intelligent Resume Parsing</h4>
+          <p>Extracts verified skills, project architectures, and academic metrics from unstructured PDFs and DOCXs in milliseconds with zero regex brittleness.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: #fdf4ff; color: #a21caf;">🎯</div>
+          <h4 style="margin-bottom: 0.5rem;">AI Match Leaderboard</h4>
+          <p>Semantically scores candidate experience against role requirements, ranking top fits instantly with explainable confidence indicators.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--ai-purple-light); color: var(--ai-purple-text);">✨</div>
+          <h4 style="margin-bottom: 0.5rem;">Gemini Interview Copilot</h4>
+          <p>Generates contextual technical probes tailored to candidate GitHub repos and projects, complete with what-to-listen-for evaluation rubrics.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box" style="background: var(--success-light); color: var(--success-text);">⚖️</div>
+          <h4 style="margin-bottom: 0.5rem;">Zero-Bias Anonymization</h4>
+          <p>All demographic identifiers (gender, caste, religion, age, pedigree proxy markers) are stripped before evaluation to guarantee true meritocracy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compliance & Trust Band -->
+    <section id="compliance" style="background: var(--slate-900); color: white; padding: 4.5rem 2rem; margin-top: 2rem;">
+      <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 3rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 320px;">
+          <div class="badge badge-success" style="margin-bottom: 1rem;">Algorithmic Parity Certified</div>
+          <h2 style="color: white; margin-bottom: 1rem; font-size: 2.2rem;">Fair, Auditable & 100% Anonymized AI</h2>
+          <p style="color: var(--slate-300); line-height: 1.7; font-size: 1.05rem;">
+            HireSmart AI executes strict demographic blinding before candidate text embeddings are created. Our models maintain an Adverse Impact Ratio of 0.992—exceeding EEOC benchmarks and eliminating systemic campus bias.
+          </p>
+          <div style="display: flex; gap: 1.5rem; margin-top: 2rem;">
+            <div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--success);">0.992</div>
+              <div style="font-size: 0.8rem; color: var(--slate-400);">Parity Index Ratio</div>
+            </div>
+            <div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--info);">&lt; 0.8%</div>
+              <div style="font-size: 0.8rem; color: var(--slate-400);">False Negative Disparity</div>
+            </div>
+            <div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: #a855f7;">100%</div>
+              <div style="font-size: 0.8rem; color: var(--slate-400);">Blind Tokenization</div>
+            </div>
+          </div>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-xl); padding: 2rem; width: 380px;">
+          <h4 style="color: white; margin-bottom: 1rem;">Compliance Health Status</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.88rem;">
+            <div style="display: flex; justify-content: space-between; color: var(--slate-300);">
+              <span>PII De-identification</span>
+              <span class="badge badge-success">Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: var(--slate-300);">
+              <span>EEOC 4/5ths Rule</span>
+              <span class="badge badge-success">Passed</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: var(--slate-300);">
+              <span>Audit Trail Logging</span>
+              <span class="badge badge-success">Encrypted</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: var(--slate-300);">
+              <span>Adversarial Red-Teaming</span>
+              <span class="badge badge-success">Verified</span>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 1.5rem; color: white; border-color: rgba(255, 255, 255, 0.2);" onclick="HireSmartAuth.loginAs('admin')">
+            Inspect Admin Bias Audit Logs →
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--slate-950); border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 3rem 2rem; color: var(--slate-400); font-size: 0.875rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.65rem;">
+        <div class="brand-icon" style="width: 28px; height: 28px; font-size: 0.9rem;">⚡</div>
+        <span style="color: white; font-weight: 700;">HireSmart AI Platform</span>
+      </div>
+      <div>
+        <span>Built for High-Scale University Campus Recruitment & Fair Hiring Standards</span>
+      </div>
+      <div>
+        <span>© 2026 HireSmart AI Technologies. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Unified Auth Modal -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Access HireSmart AI</h3>
+        <button class="btn-modal-close" onclick="HireSmartAuth.closeAuthModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Auth Tabs: Login vs Register -->
+        <div class="auth-tab-bar">
+          <button id="tab-btn-login" class="auth-tab-btn active" onclick="HireSmartAuth.switchAuthTab('login')">Sign In</button>
+          <button id="tab-btn-register" class="auth-tab-btn" onclick="HireSmartAuth.switchAuthTab('register')">Register New Account</button>
+        </div>
+
+        <!-- Role Quick Switcher Buttons -->
+        <div style="margin-bottom: 0.5rem;">
+          <span class="form-label" style="font-size: 0.8rem; margin-bottom: 0.35rem;">Select Role Persona:</span>
+          <div class="role-switcher-group">
+            <button type="button" class="role-switcher-pill active" data-role="candidate" onclick="HireSmartAuth.setAuthRole('candidate')">Candidate</button>
+            <button type="button" class="role-switcher-pill" data-role="recruiter" onclick="HireSmartAuth.setAuthRole('recruiter')">Recruiter</button>
+            <button type="button" class="role-switcher-pill" data-role="interviewer" onclick="HireSmartAuth.setAuthRole('interviewer')">Interviewer</button>
+            <button type="button" class="role-switcher-pill" data-role="admin" onclick="HireSmartAuth.setAuthRole('admin')">Admin</button>
+          </div>
+        </div>
+
+        <!-- Login Form Panel -->
+        <form id="auth-login-panel" onsubmit="HireSmartAuth.handleLoginSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Role Category</label>
+            <select id="auth-role-select" class="form-control" onchange="HireSmartAuth.setAuthRole(this.value)">
+              <option value="candidate">Candidate (Student Portal)</option>
+              <option value="recruiter">Recruiter (Studio & Leaderboard)</option>
+              <option value="interviewer">Interviewer (Gemini Copilot & Scorecard)</option>
+              <option value="admin">Admin (Funnel Analytics & Bias Audit)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="auth-email-input" class="form-control" required value="aarav.sharma@campus.iitb.ac.in">
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between;">
+              <label class="form-label">Password</label>
+              <span class="text-xs text-muted">Demo mode: any password</span>
+            </div>
+            <input type="password" id="auth-password-input" class="form-control" required value="••••••••••••">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">
+            <span>Sign In to Dashboard</span>
+            <span>→</span>
+          </button>
+
+          <div style="text-align: center; margin-top: 1rem;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="HireSmartAuth.setAuthRole(document.getElementById('auth-role-select').value)">
+              <span>⚡ Load Demo Persona Credentials</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Register Form Panel -->
+        <form id="auth-register-panel" style="display: none;" onsubmit="HireSmartAuth.handleRegisterSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="reg-name-input" class="form-control" placeholder="e.g. Maya Iyer" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="reg-email-input" class="form-control" placeholder="maya.iyer@campus.ac.in" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Select Role</label>
+            <select id="reg-role-select" class="form-control" onchange="HireSmartAuth.setAuthRole(this.value)">
+              <option value="candidate">Candidate (Student)</option>
+              <option value="recruiter">Campus Recruiter</option>
+              <option value="interviewer">Technical Interviewer</option>
+              <option value="admin">Talent Administrator</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Create Password</label>
+            <input type="password" id="reg-password-input" class="form-control" placeholder="Create a password" required value="Password123!">
+          </div>
+
+          <button type="submit" class="btn btn-ai" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">
+            <span>Create Account & Launch Portal</span>
+            <span>✨</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mock_data.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
